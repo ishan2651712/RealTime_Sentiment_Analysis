@@ -16,11 +16,11 @@ try:
 except LookupError:
     nltk.download('punkt')
 
-# 🔴 FIX ADDED HERE (VERY IMPORTANT)
+# ensure punkt_tab is also available (NLTK ≥ 3.8 fix)
 try:
-    nltk.data.find('tokenizers/punkt_tab')
-except LookupError:
-    nltk.download('punkt_tab')
+    nltk.download('punkt_tab', quiet=True)
+except Exception:
+    pass
 
 try:
     nltk.data.find('corpora/stopwords')
@@ -43,8 +43,11 @@ class TextPreprocessor:
         self.lemmatizer = WordNetLemmatizer()
         
         # Remove negation words from stopwords (important for sentiment)
-        negation_words = {'no', 'not', 'nor', 'never', "don't", "doesn't", 
-                         "didn't", "won't", "wouldn't", "shouldn't", "couldn't"}
+        negation_words = {
+            'no', 'not', 'nor', 'never',
+            "don't", "doesn't", "didn't",
+            "won't", "wouldn't", "shouldn't", "couldn't"
+        }
         self.stop_words = self.stop_words - negation_words
     
     def clean_text(self, text):

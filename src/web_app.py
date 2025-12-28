@@ -371,7 +371,7 @@ def display_result_card(result, show_save_option=True):
         st.markdown("---")
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
-            if st.button("💾 Save This Review to Dataset", key=f"save_{id(result)}", use_container_width=True):
+            if st.button("💾 Save This Review to Dataset", key=f"save_{id(result)}", width='stretch'):
                 success, result_id = save_review_to_dataset(
                     result['original_text'],
                     result['sentiment'],
@@ -407,7 +407,7 @@ def display_result_card(result, show_save_option=True):
                     st.session_state.dataset_updated = True
                     # Force immediate refresh to show updated count everywhere
                     time.sleep(0.5)
-                    st.experimental_rerun()
+                    st.rerun()
                 else:
                     st.error(f"❌ Error saving review!")
                     st.error(f"Details: {result_id}")
@@ -582,7 +582,7 @@ def main():
         # Analyze button
         col1, col2, col3 = st.columns([1, 1, 1])
         with col2:
-            if st.button("🔍 Analyze Sentiment", use_container_width=True):
+            if st.button("🔍 Analyze Sentiment", width='stretch'):
                 if review_text.strip():
                     with st.spinner("🤔 Analyzing sentiment..."):
                         time.sleep(0.5)
@@ -603,7 +603,7 @@ def main():
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            if st.button("😊 Positive Review", use_container_width=True):
+            if st.button("😊 Positive Review", width='stretch'):
                 example = "This product is absolutely amazing! The quality exceeded my expectations. Best purchase I've made this year. Highly recommend to everyone!"
                 st.text_area("Example Review:", value=example, height=150, key="pos_example")
                 result = st.session_state.analyzer.analyze_sentiment(example)
@@ -611,7 +611,7 @@ def main():
                 display_result_card(result, show_save_option=True)
         
         with col2:
-            if st.button("😞 Negative Review", use_container_width=True):
+            if st.button("😞 Negative Review", width='stretch'):
                 example = "Terrible quality! Product broke after one day. Complete waste of money. Very disappointed with this purchase. Would not recommend."
                 st.text_area("Example Review:", value=example, height=150, key="neg_example")
                 result = st.session_state.analyzer.analyze_sentiment(example)
@@ -619,7 +619,7 @@ def main():
                 display_result_card(result, show_save_option=True)
         
         with col3:
-            if st.button("😐 Neutral Review", use_container_width=True):
+            if st.button("😐 Neutral Review", width='stretch'):
                 example = "It's okay. Nothing special but it works. Average quality for the price. Does what it's supposed to do."
                 st.text_area("Example Review:", value=example, height=150, key="neu_example")
                 result = st.session_state.analyzer.analyze_sentiment(example)
@@ -644,7 +644,7 @@ def main():
             st.success("✅ Dataset updated! New reviews have been added.")
             st.session_state.dataset_updated = False
         
-        if st.button("🚀 Start Batch Analysis", use_container_width=True):
+        if st.button("🚀 Start Batch Analysis", width='stretch'):
             # Load dataset
             df = pd.read_csv(DATASET_PATH)
             total = len(df)
@@ -742,7 +742,7 @@ def main():
                     color_discrete_map={'Positive': '#667eea', 'Negative': '#f5576c', 'Neutral': '#00f2fe'}
                 )
                 fig1.update_traces(textposition='inside', textinfo='percent+label')
-                st.plotly_chart(fig1, use_container_width=True)
+                st.plotly_chart(fig1, width='stretch')
             
             with col2:
                 st.markdown("**Predicted Sentiments:**")
@@ -753,11 +753,11 @@ def main():
                     color_discrete_map={'Positive': '#667eea', 'Negative': '#f5576c', 'Neutral': '#00f2fe'}
                 )
                 fig2.update_traces(textposition='inside', textinfo='percent+label')
-                st.plotly_chart(fig2, use_container_width=True)
+                st.plotly_chart(fig2, width='stretch')
             
             # Show sample results
             st.markdown("### 📋 Sample Results (First 50)")
-            st.dataframe(results_df.head(50), use_container_width=True)
+            st.dataframe(results_df.head(50), width='stretch')
             
             # Download button
             csv = results_df.to_csv(index=False)
@@ -766,7 +766,7 @@ def main():
                 data=csv,
                 file_name=f"sentiment_analysis_{total}_reviews.csv",
                 mime="text/csv",
-                use_container_width=True
+                width='stretch'
             )
     
     # ANALYTICS PAGE
@@ -802,7 +802,7 @@ def main():
             fig.update_traces(textposition='inside', textinfo='percent+label')
             fig.update_layout(height=500)
             
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
             
             # History table
             st.markdown("### 📜 Analysis History")
@@ -816,12 +816,12 @@ def main():
                     'Confidence': f"{item['confidence']:.1f}%"
                 })
             
-            st.dataframe(pd.DataFrame(history_data), use_container_width=True)
+            st.dataframe(pd.DataFrame(history_data), width='stretch')
             
             # Clear history
             col1, col2 = st.columns(2)
             with col1:
-                if st.button("🗑️ Clear Session History", use_container_width=True):
+                if st.button("🗑️ Clear Session History", width='stretch'):
                     # Get review IDs that were saved to dataset
                     saved_review_ids = [
                         item.get('review_id') 
@@ -836,11 +836,11 @@ def main():
                     # Clear analysis history
                     st.session_state.analysis_history = []
                     st.session_state.dataset_updated = True
-                    st.experimental_rerun()
+                    st.rerun()
             
             with col2:
-                if st.button("🔄 Refresh Dashboard", use_container_width=True):
-                    st.experimental_rerun()
+                if st.button("🔄 Refresh Dashboard", width='stretch'):
+                    st.rerun()
 
 if __name__ == "__main__":
     main()
