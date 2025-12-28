@@ -149,7 +149,39 @@ git push -u origin main
 
    **App URL** (optional): Choose a custom URL like `sentiment-analysis-app` (or leave default)
 
-3. Click **"Deploy!"**
+3. **Advanced settings** (click to expand):
+
+   - **Python version**: Leave as default (Python 3.11) or select Python 3.11
+   - **Secrets**: Leave empty (not needed for this project)
+   - **Dependencies file**: Leave as `requirements.txt` (default)
+   - **Working directory**: Leave empty (defaults to repository root)
+   - **Command line arguments**: Leave empty (not needed)
+
+4. Click **"Deploy!"**
+
+### 3.2.1 Advanced Settings Explained
+
+**For this project, you can leave all advanced settings as default:**
+
+- **Python version**: Default (Python 3.11) ✅
+
+  - Your code works with Python 3.11, which is the default
+
+- **Secrets**: Leave empty ✅
+
+  - You don't need API keys or secrets for this project
+
+- **Dependencies file**: `requirements.txt` ✅
+
+  - This is already set correctly
+
+- **Working directory**: Leave empty ✅
+
+  - Streamlit will run from the repository root, which is correct
+  - Your paths in code already handle this
+
+- **Command line arguments**: Leave empty ✅
+  - Not needed for this app
 
 ### 3.3 Wait for Deployment
 
