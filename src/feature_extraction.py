@@ -3,6 +3,18 @@ feature_extraction.py
 PHASE 4: Feature Extraction Module
 Extracts features from preprocessed text for sentiment analysis
 """
+import nltk
+
+# Ensure required NLTK data is available
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
+
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords')
 
 from collections import Counter
 import os
